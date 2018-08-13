@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <h1>Riset connecting printer</h1>
+  <button id='reqDevice'>Req Device</button>
+  <script>
+    // navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
+    // .then(device => {
+    //   console.log('device');
+    //   console.log(device.productName);      // "Arduino Micro"
+    //   console.log(device.manufacturerName); // "Arduino LLC"
+    // }).catch(error => { 
+    //   console.log('error');
+    //   console.log(error); 
+    // });
+
+    // chrome.bluetooth.getAdapterState(function(adapter) {
+    //   console.log("Adapter " + adapter.address + ": " + adapter.name);
+    // });
+    const load = () => {
+        var myButton = document.getElementById('reqDevice')
+        myButton.addEventListener('pointerup', function(event) {
+          // Call navigator.bluetooth.requestDevice
+          navigator.bluetooth.requestDevice({ 
+            acceptAllDevices: true
+          })
+          .then(device => { console.log(device) })
+          .catch(error => { console.log(error); });
+        })
+    } 
+    window.onload = load;
+  </script>  
+</body>
+</html>
