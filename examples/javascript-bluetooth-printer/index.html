@@ -10,30 +10,48 @@
   <h1>Connecting Printer To Web Via Bluetooth</h1>
   <button id='reqDevice'>Req Device</button>
   <script>
-    // navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
-    // .then(device => {
-    //   console.log('device');
-    //   console.log(device.productName);      // "Arduino Micro"
-    //   console.log(device.manufacturerName); // "Arduino LLC"
-    // }).catch(error => { 
-    //   console.log('error');
-    //   console.log(error); 
-    // });
-
-    // chrome.bluetooth.getAdapterState(function(adapter) {
-    //   console.log("Adapter " + adapter.address + ": " + adapter.name);
-    // });
     const load = () => {
-        var myButton = document.getElementById('reqDevice')
+        const myButton = document.getElementById('reqDevice');
+        let printCharacteristic = null;
         myButton.addEventListener('pointerup', function(event) {
-          // Call navigator.bluetooth.requestDevice
-          navigator.bluetooth.requestDevice({ 
-            acceptAllDevices: true
-          })
-          .then(device => { console.log(device) })
-          .catch(error => { console.log(error); });
+          if (printCharacteristic == null) {
+            navigator.bluetooth.requestDevice({
+              filters: [{
+                services: ['000018f0-0000-1000-8000-00805f9b34fb']
+              }]
+            })
+            .then(device => {
+              console.log('> Found ' + device.name);
+              console.log('Connecting to GATT Server...');
+              return device.gatt.connect();
+            })
+            .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
+            .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+            .then(characteristic => {
+              // Cache the characteristic
+              console.warn(characteristic);
+              printCharacteristic = characteristic;
+              sendTextData();
+            })
+            .catch(handleError => {
+              console.warn(handleError);
+              printCharacteristic = null;
+            });
+          } else {
+            sendTextData();
+          }  
         })
-    } 
+
+      function sendTextData() {
+        // Get the bytes for the text
+        let encoder = new TextEncoder("utf-8");
+        // Add line feed + carriage return chars to text
+        let text = encoder.encode('Your receipt guys...' + '\u000A\u000D');
+        return printCharacteristic.writeValue(text).then(() => {
+          console.log('Write done.');
+        });
+      }
+    }
     window.onload = load;
   </script>  
 </body>
