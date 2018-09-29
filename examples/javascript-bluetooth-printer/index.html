@@ -12,12 +12,13 @@
   <script>
     const load = () => {
         const myButton = document.getElementById('reqDevice');
+        const UUID = 'e7810a71-73ae-499d-8c15-faa9aef0c3f2'
         let printCharacteristic = null;
         myButton.addEventListener('pointerup', function(event) {
           if (printCharacteristic == null) {
             navigator.bluetooth.requestDevice({
               filters: [{
-                services: ['000018f0-0000-1000-8000-00805f9b34fb']
+                services: [UUID]
               }]
             })
             .then(device => {
@@ -25,8 +26,8 @@
               console.log('Connecting to GATT Server...');
               return device.gatt.connect();
             })
-            .then(server => server.getPrimaryService("000018f0-0000-1000-8000-00805f9b34fb"))
-            .then(service => service.getCharacteristic("00002af1-0000-1000-8000-00805f9b34fb"))
+            .then(server => server.getPrimaryService(UUID))
+            .then(service => service.getCharacteristic(UUID))
             .then(characteristic => {
               // Cache the characteristic
               console.warn(characteristic);
