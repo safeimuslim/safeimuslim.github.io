@@ -11,6 +11,71 @@
   <button id='reqDevice'>Req Device</button>
   <script>
     const load = () => {
+        /**
+        Iware ZJ-58MP
+        ***
+        Generic Access
+        UUID: 0x1800
+        Primary Service
+
+        Device Name
+        UUID: 0x2A00
+        Properties: READ
+        * * *
+        Generic Attribute
+        UUID: 0x1801
+        Primary Service
+
+        Service Changed
+        UUID: 0x2A05
+        Properties: READ
+
+        * * *
+        Unknown Service
+        UUID: 49535343-fe7d-4ae5-8fa9-9fafd205e455
+        Primary Service
+
+        Unknown Characteristic
+        UUID: 49535343-1e4d-4bd9-ba61-23c647249616
+        Properties: Notify
+        Descriptors:
+        Client CHaracteristic Configuration
+        UUID: 0x2902
+
+        Unknown Characteristic
+        UUID: 49535343-8841-43f4-a8d4-ecbe34729bb3
+        Properties: WRITE, WRITE NO RESPONSE
+
+        * * *
+
+        Unknown Service
+        UUID: e7810a71-73ae-499d-8c15-faa9aef0c3f2
+        Primary Service
+
+        Unknown Characteristic
+        UUID: bef8d6c9-9c21-4c9e-b632-bd58c1009f9f
+        Properties: INDICATE, NOTIFY, READ, WRITE, WRITE NO RESPONSE
+        Descriptors:
+        Client Charateristic Configuration
+        UUID: 0x2902
+
+        * * *
+
+        Unknown Service
+        UUID: 000018f0-0000-1000-8000-00805f9b34fb
+        Primary Service
+
+        Unknown Characteristic
+        UUID: 00002af0-0000-1000-8000-00805f9b34fb
+        Properties: INDICATE, NOTIFY
+        Descriptors: 
+        Client Charateristic Configuration
+        UUID: 0x2902
+
+        Unknown Characteristic
+        UUID: 00002af1-0000-1000-8000-00805f9b34fb
+        Properties: WRITE, WRITE NO RESPONSE
+        **/
         const myButton = document.getElementById('reqDevice');
         const UUID_SERVICE = '000018f0-0000-1000-8000-00805f9b34fb'
         const UUID_CHARATERISTIC = '00002af1-0000-1000-8000-00805f9b34fb'
